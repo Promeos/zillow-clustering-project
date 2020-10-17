@@ -1,6 +1,6 @@
 # Zillow Clustering Project
 
-Discover the drivers of Zillow's zestimate logerror of single unit properties using properties that were sold in May and June of 2017.
+The purpose of this project is to discover the drivers of Zillow's Zestimate logerror of single unit properties sold in May and June of 2017.
 
 ## Summary
 
@@ -20,8 +20,6 @@ Discover the drivers of Zillow's zestimate logerror of single unit properties us
 │
 ├── prepare.py          <- The script for preparing the raw data
 │
-├── wrangle.py          <- The script for preparing the raw data for exploration
-│
 ├── model.py            <- The script for preprocessing, modeling, and interpreting
 ```
 
@@ -34,10 +32,10 @@ Discover the drivers of Zillow's zestimate logerror of single unit properties us
 - seaborn >= 0.11.0
 
 ## Setup
-1. Download a zip file of the repository [here]
+1. Download a zip file of the repository [here](https://github.com/Promeos/zillow-clustering-project/archive/main.zip)
 2. Clone this repository using:
 ```
-
+git clone git@github.com:Promeos/zillow-clustering-project.git
 ```
 
 To open the file in a jupyter notebook use following code:
@@ -46,10 +44,65 @@ import pandas as pd
 df = pd.read_csv('zillow.csv')
 ```
 
+## Planning
+Goals:
+1. The goal of this project is to discover the drivers of Zillow's Zestimate logerror using single unit properties sold in May and June of 2017.
+
+2. Generate valuable insights in EDA. Test, Visualize, Document.
+
+3. Build a model to accurately predict ...
+
+Measures of Success:
+<strong>DOCUMENT EVERYTHING</strong>
+1. Clearly explain the acquisition and preparation stages. Why certain observations/values/columns are removed, imputing values, casting etc. Document outliers and how they are handled.
+2. Discover 2 features that drive logerror using statistical tests.
+    - 1 Chi2 Test
+    - 2/3 T-tests
+    - 1 ANOVA
+3. Use kmeans clustering to create new features from the Zillow dataset.
+    - Determine if the new features created with kmeans clustering reduces the logerror of the model.
+    - MVP: 3 Clustering Features.
+    - Document what the new features extrapolated from the data.
+4. Create 4 distinct models
+    - Outperform the baseline model.
+    - Write a short summary of how the model works.
+        - Features used
+        - Preprocessing methods
+        - Algorithm used
+        - Hyperparameters used
+        - Train, validate, and test splits
+        - Score/Performance
+
+Your audience for this project is a data science team. The presentation will consist of a notebook demo of the discoveries you made and work you have done related to uncovering what the drivers of the error in the zestimate is.
+
+MVP/Final Product:
+1. A jupyter notebook that incorporates each stage of the pipeline.
+    - Clean documentation, docstrings
+    - Separate .py files to store functions used in acquisition/preparation/modeling
+    - Clean code
+    - Separate .ipynb's for acqusition and preparation process.
+        - Include summary of acquistion and preparation in final notebook.
+        - Include links to each notebook.
+2. Deliver to a data science team.
+3. The insights from the notebook will be used to uncover drivers of Zillow's Zestimate error.
+4. The project is finished if I can explain the drivers of Zillow's Zestimate error using statistical tests and outperform the baseline logerror.
+5. Rehearse presenting the notebook at least 5 times.
+    - Ask questions/answer with notebook
+    - clearly state what each graph means
+    - clearly state what the takeaways are in each section
+    - simplify graphs and reiterate key points
+    - present what is useful
+
+Formulating hypotheses
+
+    Is attribute V1 related to attribute V2?
+    Is the mean of target variable Y for subset A significantly different from that of subset B?
+    ...
+
+
 ## Acknowledgements
 - Codeup Data Science Team
 - Darden Cohort
-- Generated with [ryans_codeup_data_science_mvp](https://github.com/RyanMcCall/-ryans_codeup_data_science_mvp)
 
 ## Contact
 - [@Promeos42](https://twitter.com/Promeos42)

@@ -234,8 +234,6 @@ def select_rfe(X, y, k_features=3):
     '''
     lm = LinearRegression()
     rfe_init = RFE(lm, k_features)
-    
-    X_rfe = rfe_init.fit(X, y)
 
     rfe_mask = rfe_init.support_    
     rfe_features = X.iloc[:, rfe_mask].columns.to_list()
