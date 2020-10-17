@@ -93,11 +93,8 @@ MVP/Final Product:
     - simplify graphs and reiterate key points
     - present what is useful
 
-Formulating hypotheses
+Hypothesis Tests:
 
-    Is attribute V1 related to attribute V2?
-    Is the mean of target variable Y for subset A significantly different from that of subset B?
-    ...
 
 
 ## Acknowledgements
