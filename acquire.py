@@ -5,7 +5,7 @@ import os
 ###################### SQL Connection w/ Credentials ######################
 def get_connection(db, user=env.user, host=env.host, password=env.password):
     '''
-    Returns a formatted url with login credentials to access data on a SQL database.
+    Returns a formatted url with login credentials to access a SQL database.
     '''
     return f'mysql+pymysql://{user}:{password}@{host}/{db}'
 
