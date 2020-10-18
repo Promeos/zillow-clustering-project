@@ -1,20 +1,14 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler, RobustScaler
-from sklearn.linear_model import LinearRegression
-from sklearn.feature_selection import SelectKBest, f_regression, RFE
 
-
-def wrangle_data(df, target_name, modeling=False):
+def prepare_zillow_data(df, target_name):
     '''
-    Signature: prep_data(df, modeling=False)
+    Signature: prepare_zillow_data(df, target_name)
     Docstring:
-    This function accepts any dataframe and splits it into train, validate,
-    and test sets for EDA or modeling.
+    This function accepts the zillow dataframe and splits it into train, validate,
+    and test sets for data exploration.
 
     Parameters
     ----------
@@ -22,20 +16,11 @@ def wrangle_data(df, target_name, modeling=False):
     
     target_name : str
         target_name is the column name of the target variable
-    
-    modeling : boolean, False by default
-        `modeling` parameter scales numeric data to use in machine learning models.
-        
-        If modeling is False: The function returns unscaled X_set and y_set dataframes
-        If modeling is True: The function returns scaled X_set and y_set dataframes
 
     Returns
     -------
     X_train, y_train, X_validate, y_validate, X_test, y_test
     '''
-    # Create dummy variables for object dtypes
-    # Original object dtype columns are dropped
-    df = add_encoded_columns(df, drop_encoders=True)
     
     # After columns are coded, this function accepts a cleaned and encoded
     # dataframe and returns train, validate, and test sets
@@ -45,10 +30,6 @@ def wrangle_data(df, target_name, modeling=False):
     X_train, y_train = attributes_target_split(train, target_name)
     X_validate, y_validate = attributes_target_split(validate, target_name)
     X_test, y_test = attributes_target_split(test, target_name)
-    
-    # If modeling is True
-    if modeling:
-        X_train, X_validate, X_test = add_scaled_columns(train, validate, test)
     
     return X_train, y_train, X_validate, y_validate, X_test, y_test
 
@@ -88,7 +69,7 @@ def train_validate_test(df):
     '''
     Signature: train_validate_test(df)
     Docstring:
-
+    splits a dataframe into train, validate, and test sets for exploration/modeling
     Parameters
     ----------
     pandas.core.frame.DataFrame
@@ -98,8 +79,19 @@ def train_validate_test(df):
     -------
     train, validate, test
     '''
-    train_validate, test = train_test_split(df, test_size=.20, random_state=123)
-    train, validate = train_test_split(train_validate, test_size=.25, random_state=123)
+    # Add option to split data based on len of dataset
+    train_validate, test = train_test_split(
+        df,
+        test_size=.20,
+        random_state=123
+    )
+    
+    train, validate = train_test_split(
+        train_validate,
+        test_size=.25,
+        random_state=123
+    )
+    
     return train, validate, test
 
 
@@ -107,7 +99,8 @@ def attributes_target_split(data_set, target_name):
     '''
     Signature: attributes_target_split(df, target)
     Docstring:
-
+    transforms split data into seperate X_set, y_set
+    
     Parameters
     ----------
     pandas.core.frame.DataFrame
@@ -173,74 +166,3 @@ def add_scaled_columns(train, validate, test, scaler=RobustScaler()):
                      axis=1)
     
     return train, validate, test
-
-
-def features_for_modeling(predictors, target, k_features):
-    '''
-    Signature: features_for_modeling(predictors, target, k_features)
-    Docstring:
-
-    Parameters
-    ----------
-
-    Returns
-    -------
-
-    '''
-    df_best = pd.DataFrame(select_kbest(predictors, target, k_features))
-    df_rfe = pd.DataFrame(select_rfe(predictors, target, k_features))
-    
-    df_features = pd.concat([df_best, df_rfe], axis=1)
-    return df_features
-
-
-def select_kbest(predictors, target, k_features=3):
-    '''
-    Signature: select_kbest(predictors, target, k_features=3)
-    Docstring:
-
-    Parameters
-    ----------
-    pandas.core.frame.DataFrame
-
-    Returns
-    -------
-
-    '''
-    f_selector = SelectKBest(f_regression, k=k_features)
-    f_selector.fit(predictors, target)
-    
-    f_mask = f_selector.get_support()
-    f_features = predictors.iloc[:,f_mask].columns.to_list()
-    
-    print(f"Select K Best: {len(f_features)} features")
-    print(f_features)
-    return None
-    # return predictors[f_features]
-    
-    
-def select_rfe(X, y, k_features=3):
-    '''
-    Signature: rfe(predictors, target, k_features=3)
-    Docstring:
-
-    Parameters
-    ----------
-    pandas.core.frame.DataFrame
-
-    Returns
-    -------
-
-    '''
-    lm = LinearRegression()
-    rfe_init = RFE(lm, k_features)
-
-    rfe_mask = rfe_init.support_    
-    rfe_features = X.iloc[:, rfe_mask].columns.to_list()
-
-    print(f"Recursive Feature Elimination: {len(rfe_features)} features")
-    print(rfe_features)
-    return None
-    #return X[rfe_features]
-
-
