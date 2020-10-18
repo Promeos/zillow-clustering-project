@@ -39,7 +39,7 @@ def get_zillow_data():
     left join `typeconstructiontype` using(`typeconstructiontypeid`)
     where (latitude is not null
     and longitude is not null
-    and propertylandusetypeid in (261, 262, 264, 273));'''
+    and propertylandusetypeid = 261);'''
     
     file = 'zillow.csv'
     
