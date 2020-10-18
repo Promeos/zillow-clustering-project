@@ -3,7 +3,6 @@ import env
 import os
 
 ###################### SQL Connection w/ Credentials ######################
-
 def get_connection(db, user=env.user, host=env.host, password=env.password):
     '''
     Returns a formatted url with login credentials to access data on a SQL database.
@@ -39,7 +38,8 @@ def get_zillow_data():
     left join `storytype` using(`storytypeid`)
     left join `typeconstructiontype` using(`typeconstructiontypeid`)
     where (latitude is not null
-    and longitude is not null);'''
+    and longitude is not null
+    and propertylandusetypeid in (261, 262, 264, 273));'''
     
     file = 'zillow.csv'
     
