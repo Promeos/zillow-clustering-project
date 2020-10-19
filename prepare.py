@@ -119,6 +119,31 @@ def prepare_zillow():
     df.drop(columns='num_of_rooms', inplace=True)
     df.has_hottub_or_spa = df.has_hottub_or_spa.astype('int')
     
+    df = df[['parcelid',
+             'num_of_bedrooms',
+             'num_of_restrooms',
+             'living_room_area_sqft',
+             'lot_size_sqft',
+             'year_built',
+             'has_basement',
+             'has_hottub_or_spa',
+             'has_pool',
+             'pool_area_sqft',
+             'has_patio',
+             'patio_area_sqft',
+             'has_shed',
+             'basement_area_sqft',
+             'property_tax',
+             'structure_tax',
+             'land_tax',
+             'taxable_value',
+             'date_sold',
+             'fips',
+             'latitude',
+             'longitude',
+             'logerror']]
+    
+    
     return df
 
 
