@@ -1,26 +1,125 @@
 # Write supporting functions here
 import pandas as pd
+import numpy as np
 
 from acquire import get_zillow_data
 
 
 def prepare_zillow():
     '''
-    Signature: prepare_zillow(df) -> pandas.core.frame.DataFrame
+    Signature: prepare_zillow() -> pandas.core.frame.DataFrame
     Docstring:
-    Prepare the zillow dataset for data EDA
-    Return DataFrame of zillow dataset
-    Parameters
-    ----------
-    df : pandas.core.frame.DataFrame
-    df is the Zillow dataset stored as `zillow.csv`
-    Returns
-    -------
-    DataFrame of the zillow dataset
-    Examples
-    --------
+        Prepare the zillow dataset for data EDA
+        Return DataFrame of zillow dataset
     '''
     df = get_zillow_data()
+    
+    df.storydesc.fillna(0, inplace=True)
+    df.storydesc.replace('Basement', 1, inplace=True)
+    df['has_basement'] = df.storydesc
+    
+    df.hashottuborspa.fillna(0, inplace=True)
+    df['has_hottub_or_spa'] = df.hashottuborspa
+    
+    df.poolcnt.fillna(0, inplace=True)
+    df['has_pool'] = df.poolcnt
+    
+    df.poolsizesum.fillna(0, inplace=True)
+    df['pool_area_sqft'] = df.poolsizesum
+    
+    df['has_patio'] = df.yardbuildingsqft17.notnull().astype(np.int)
+    df['patio_area_sqft'] = df.yardbuildingsqft17.fillna(0)
+    
+    df['has_shed'] = df.yardbuildingsqft26.notnull().astype(np.int)
+    df['basement_area_sqft'] = df.yardbuildingsqft26.fillna(0)
+    
+    bathroom_median = df.calculatedbathnbr.median()
+    df.calculatedbathnbr.fillna(bathroom_median, inplace=True)
+    df.rename(columns={'calculatedbathnbr': 'num_of_restrooms'}, inplace=True)
+    
+    bedroomcnt_median = df.bedroomcnt.median()
+    df.bedroomcnt.fillna(bedroomcnt_median, inplace=True)
+    df.rename(columns={'bedroomcnt': 'num_of_bedrooms'}, inplace=True)
+    
+    median_lot_in_sqft = df.lotsizesquarefeet.median()
+    df['lot_size_sqft'] = df.lotsizesquarefeet.fillna(median_lot_in_sqft)
+       
+    features_to_drop = [
+    'decktypeid',
+    'buildingclasstypeid',
+    'buildingqualitytypeid',
+    'finishedsquarefeet6',
+    'finishedsquarefeet13',
+    'finishedsquarefeet15',
+    'buildingclassdesc',
+    'pooltypeid2',
+    'pooltypeid7',
+    'pooltypeid10',
+    'regionidcity',
+    'regionidcounty',
+    'regionidzip',    
+    'typeconstructiontypeid',
+    'typeconstructiondesc',
+    'architecturalstyletypeid',
+    'architecturalstyledesc',
+    'storytypeid',
+    'storydesc',
+    'hashottuborspa',
+    'poolcnt',
+    'poolsizesum',
+    'yardbuildingsqft17',
+    'yardbuildingsqft26',
+    'taxdelinquencyyear',
+    'taxdelinquencyflag',
+    'finishedsquarefeet50',
+    'finishedfloor1squarefeet',
+    'censustractandblock',
+    'rawcensustractandblock',
+    'propertylandusetypeid',
+    'id',
+    'assessmentyear',
+    'finishedsquarefeet12',
+    'bathroomcnt',
+    'fullbathcnt',
+    'basementsqft',
+    'threequarterbathnbr',
+    'lotsizesquarefeet',
+    'propertylandusedesc',
+    'propertycountylandusecode',
+    'regionidcounty'
+]
+   
+    
+    df.drop(columns=features_to_drop, inplace=True)
+    
+    df.rename(columns={'calculatedfinishedsquarefeet': 'living_room_area_sqft',
+                      'structuretaxvaluedollarcnt': 'structure_tax',
+                      'taxvaluedollarcnt': 'taxable_value',
+                      'landtaxvaluedollarcnt': 'land_tax',
+                      'taxamount': 'property_tax',
+                      'lasttransactiondate': 'date_sold',
+                      'roomcnt' : 'num_of_rooms',
+                      'yearbuilt': 'year_built'},
+         inplace=True)
+    
+    
+    df = handle_missing_values(df)
+    columns_to_impute = df.isna().sum()[df.isna().sum()>0].index.to_list()
+    
+    for column_name in columns_to_impute:
+        median = df[column_name].median()
+        df[column_name] = df[column_name].fillna(median)
+    
+    df.year_built = df.year_built.astype(np.int)
+    df.fips = df.fips.astype(np.int)
+    df.has_hottub_or_spa = df.has_hottub_or_spa.astype(np.int)
+    df.has_pool = df.has_pool.astype(np.int)
+    df.num_of_rooms = df.num_of_rooms.astype('category')
+    df.num_of_restrooms = df.num_of_restrooms.astype('category')
+    df.num_of_bedrooms = df.num_of_bedrooms.astype('category')
+    df.num_of_restrooms = df.num_of_restrooms.astype('category')
+    df.has_hottub_or_spa = df.has_hottub_or_spa.astype('int')
+    
     return df
 
 
