@@ -35,10 +35,12 @@ def prepare_zillow():
     
     bathroom_median = df.calculatedbathnbr.median()
     df.calculatedbathnbr.fillna(bathroom_median, inplace=True)
+    df.calculatedbathnbr = df.calculatedbathnbr.replace(0, bathroom_median)
     df.rename(columns={'calculatedbathnbr': 'num_of_restrooms'}, inplace=True)
     
     bedroomcnt_median = df.bedroomcnt.median()
     df.bedroomcnt.fillna(bedroomcnt_median, inplace=True)
+    df.bedroomcnt = df.bedroomcnt.replace(0, bedroomcnt_median)
     df.rename(columns={'bedroomcnt': 'num_of_bedrooms'}, inplace=True)
     
     median_lot_in_sqft = df.lotsizesquarefeet.median()
@@ -86,7 +88,7 @@ def prepare_zillow():
     'lotsizesquarefeet',
     'propertylandusedesc',
     'propertycountylandusecode',
-    'regionidcounty'
+    'regionidcounty',
 ]
    
     
@@ -114,10 +116,7 @@ def prepare_zillow():
     df.fips = df.fips.astype(np.int)
     df.has_hottub_or_spa = df.has_hottub_or_spa.astype(np.int)
     df.has_pool = df.has_pool.astype(np.int)
-    df.num_of_rooms = df.num_of_rooms.astype('category')
-    df.num_of_restrooms = df.num_of_restrooms.astype('category')
-    df.num_of_bedrooms = df.num_of_bedrooms.astype('category')
-    df.num_of_restrooms = df.num_of_restrooms.astype('category')
+    df.drop(columns='num_of_rooms', inplace=True)
     df.has_hottub_or_spa = df.has_hottub_or_spa.astype('int')
     
     return df
