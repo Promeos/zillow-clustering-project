@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 
 from sklearn.model_selection import train_test_split
+from sklearn.impute import SimpleImputer
 
 def prepare_zillow_data(df, target_name):
     '''
@@ -32,6 +33,32 @@ def prepare_zillow_data(df, target_name):
     X_test, y_test = attributes_target_split(test, target_name)
     
     return X_train, y_train, X_validate, y_validate, X_test, y_test
+
+    
+def impute_values(train, validate, test):
+    
+    columns_to_impute = ['num_of_restrooms',
+                         'living_room_area_sqft',
+                         'lot_size_sqft',
+                         'year_built',
+                         'property_tax',
+                         'structure_tax',
+                         'land_tax',
+                         'taxable_value']
+    
+    imputer = SimpleImputer(strategy='median')
+    
+    # impute missing values in train, validate and test sets
+    train[columns_to_impute] = imputer.fit_transform(train[columns_to_impute])
+    
+    validate[columns_to_impute] = imputer.transform(validate[columns_to_impute])
+    test[columns_to_impute] = imputer.transform(test[columns_to_impute])
+    
+    train.year_built = train.year_built.astype(np.int)
+    validate.year_built = validate.year_built.astype(np.int)
+    test.year_built = test.year_built.astype(np.int)
+    
+    return train, validate, test
 
 
 def add_encoded_columns(df, drop_encoders=True):
@@ -91,7 +118,7 @@ def train_validate_test(df):
         test_size=.25,
         random_state=123
     )
-    
+    train, validate, test = impute_values(train, validate, test)
     return train, validate, test
 
 
@@ -115,7 +142,7 @@ def attributes_target_split(data_set, target_name):
     return x, y
 
 
-def add_scaled_columns(train, validate, test, scaler=RobustScaler()):
+def add_scaled_columns(train, validate, test, scaler):
     '''
     Signature: add_scaled_columns(train, validate, test, scaler)
     Docstring:

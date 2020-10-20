@@ -32,19 +32,7 @@ def prepare_zillow():
     
     df['has_shed'] = df.yardbuildingsqft26.notnull().astype(np.int)
     df['basement_area_sqft'] = df.yardbuildingsqft26.fillna(0)
-    
-    bathroom_median = df.calculatedbathnbr.median()
-    df.calculatedbathnbr.fillna(bathroom_median, inplace=True)
-    df.calculatedbathnbr = df.calculatedbathnbr.replace(0, bathroom_median)
-    df.rename(columns={'calculatedbathnbr': 'num_of_restrooms'}, inplace=True)
-    
-    bedroomcnt_median = df.bedroomcnt.median()
-    df.bedroomcnt.fillna(bedroomcnt_median, inplace=True)
-    df.bedroomcnt = df.bedroomcnt.replace(0, bedroomcnt_median)
-    df.rename(columns={'bedroomcnt': 'num_of_bedrooms'}, inplace=True)
-    
-    median_lot_in_sqft = df.lotsizesquarefeet.median()
-    df['lot_size_sqft'] = df.lotsizesquarefeet.fillna(median_lot_in_sqft)
+
        
     features_to_drop = [
     'decktypeid',
@@ -85,39 +73,26 @@ def prepare_zillow():
     'fullbathcnt',
     'basementsqft',
     'threequarterbathnbr',
-    'lotsizesquarefeet',
     'propertylandusedesc',
     'propertycountylandusecode',
     'regionidcounty',
 ]
    
-    
     df.drop(columns=features_to_drop, inplace=True)
     
-    df.rename(columns={'calculatedfinishedsquarefeet': 'living_room_area_sqft',
-                      'structuretaxvaluedollarcnt': 'structure_tax',
-                      'taxvaluedollarcnt': 'taxable_value',
-                      'landtaxvaluedollarcnt': 'land_tax',
-                      'taxamount': 'property_tax',
-                      'lasttransactiondate': 'date_sold',
-                      'roomcnt' : 'num_of_rooms',
-                      'yearbuilt': 'year_built'},
-         inplace=True)
-    
-    
-    df = handle_missing_values(df)
-    columns_to_impute = df.isna().sum()[df.isna().sum()>0].index.to_list()
-    
-    for column_name in columns_to_impute:
-        median = df[column_name].median()
-        df[column_name] = df[column_name].fillna(median)
-    
-    df.year_built = df.year_built.astype(np.int)
-    df.fips = df.fips.astype(np.int)
-    df.has_hottub_or_spa = df.has_hottub_or_spa.astype(np.int)
-    df.has_pool = df.has_pool.astype(np.int)
-    df.drop(columns='num_of_rooms', inplace=True)
-    df.has_hottub_or_spa = df.has_hottub_or_spa.astype('int')
+    df.rename(columns={'lotsizesquarefeet': 'lot_size_sqft',
+                       'calculatedfinishedsquarefeet': 'living_room_area_sqft',
+                       'structuretaxvaluedollarcnt': 'structure_tax',
+                       'taxvaluedollarcnt': 'taxable_value',
+                       'landtaxvaluedollarcnt': 'land_tax',
+                       'taxamount': 'property_tax',
+                       'lasttransactiondate': 'date_sold',
+                       'roomcnt' : 'num_of_rooms',
+                       'yearbuilt': 'year_built',
+                       'bedroomcnt': 'num_of_bedrooms',
+                       'calculatedbathnbr': 'num_of_restrooms'
+                       },
+              inplace=True)
     
     df = df[['parcelid',
              'num_of_bedrooms',
@@ -142,6 +117,11 @@ def prepare_zillow():
              'latitude',
              'longitude',
              'logerror']]
+    
+    df.fips = df.fips.astype(np.int)
+    df.has_hottub_or_spa = df.has_hottub_or_spa.astype(np.int)
+    df.has_pool = df.has_pool.astype(np.int)
+    df.has_hottub_or_spa = df.has_hottub_or_spa.astype(np.int)
     
     
     return df
