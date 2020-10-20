@@ -121,8 +121,7 @@ def prepare_zillow():
     df.fips = df.fips.astype(np.int)
     df.has_hottub_or_spa = df.has_hottub_or_spa.astype(np.int)
     df.has_pool = df.has_pool.astype(np.int)
-    df.has_hottub_or_spa = df.has_hottub_or_spa.astype(np.int)
-    
+    df.num_of_bedrooms = df.num_of_bedrooms.replace(0, np.nan)
     
     return df
 

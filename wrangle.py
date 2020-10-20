@@ -37,7 +37,8 @@ def prepare_zillow_data(df, target_name):
     
 def impute_values(train, validate, test):
     
-    columns_to_impute = ['num_of_restrooms',
+    columns_to_impute = ['num_of_bedrooms',
+                         'num_of_restrooms',
                          'living_room_area_sqft',
                          'lot_size_sqft',
                          'year_built',
@@ -49,8 +50,7 @@ def impute_values(train, validate, test):
     imputer = SimpleImputer(strategy='median')
     
     # impute missing values in train, validate and test sets
-    train[columns_to_impute] = imputer.fit_transform(train[columns_to_impute])
-    
+    train[columns_to_impute] = imputer.fit_transform(train[columns_to_impute]) 
     validate[columns_to_impute] = imputer.transform(validate[columns_to_impute])
     test[columns_to_impute] = imputer.transform(test[columns_to_impute])
     
