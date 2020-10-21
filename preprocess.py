@@ -5,7 +5,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import MinMaxScaler, RobustScaler
 from sklearn.linear_model import LinearRegression
 from sklearn.feature_selection import SelectKBest, f_regression
-import sklearn.feature_selection.rfe as rfe
+from sklearn.feature_selection import RFE as rfe
 
 def impute_missing_data(train, validate, test):
     '''
@@ -102,6 +102,7 @@ def select_rfe(X, y, k_features=3):
     lm = LinearRegression()
     rfe_init = rfe(lm, k_features)
 
+    rfe_init.fit(X, y)
     rfe_mask = rfe_init.support_    
     rfe_features = X.iloc[:, rfe_mask].columns.to_list()
 
