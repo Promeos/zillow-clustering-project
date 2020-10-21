@@ -81,7 +81,7 @@ def prepare_zillow():
     df.drop(columns=features_to_drop, inplace=True)
     
     df.rename(columns={'lotsizesquarefeet': 'lot_size_sqft',
-                       'calculatedfinishedsquarefeet': 'living_room_area_sqft',
+                       'calculatedfinishedsquarefeet': 'livable_area_sqft',
                        'structuretaxvaluedollarcnt': 'structure_tax',
                        'taxvaluedollarcnt': 'taxable_value',
                        'landtaxvaluedollarcnt': 'land_tax',
@@ -97,7 +97,7 @@ def prepare_zillow():
     df = df[['parcelid',
              'num_of_bedrooms',
              'num_of_restrooms',
-             'living_room_area_sqft',
+             'livable_area_sqft',
              'lot_size_sqft',
              'year_built',
              'has_basement',

@@ -13,7 +13,7 @@ def cluster_features(X_train, X_validate, X_test):
                          'has_patio_scaled',
                          'has_shed_scaled']
 
-    cluster_columns_3 = ['living_room_area_sqft_scaled',
+    cluster_columns_3 = ['livable_area_sqft_scaled',
                          'lot_size_sqft_scaled',
                          'year_built_scaled']
 

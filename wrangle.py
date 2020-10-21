@@ -39,7 +39,7 @@ def impute_values(train, validate, test):
     
     columns_to_impute = ['num_of_bedrooms',
                          'num_of_restrooms',
-                         'living_room_area_sqft',
+                         'livable_area_sqft',
                          'lot_size_sqft',
                          'year_built',
                          'property_tax',
