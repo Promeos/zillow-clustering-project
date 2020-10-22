@@ -6,6 +6,34 @@ The purpose of this project is to discover the drivers of Zillow's Zestimate log
 
 
 ## Data Dictionary
+| Features | Description |
+| :------ | :---------- |
+| `latitude` | Latitude of the middle of the parcel divided by 10e6 |
+| `longitude` | Longitude of the middle of the parcel divided by 10e6 |
+| `fips` | Federal Information Processing Standard code -  see https://en.wikipedia.org/wiki/FIPS_county_code for more details |
+| `parcelid` | Unique identifier for parcels (lots) |
+| `basement_area_sqft` | Finished living area below or partially below ground level |
+| `num_of_bedrooms` | Number of bedrooms in home |
+| `num_of_restrooms` | Number of bathrooms in home including fractional bathrooms  |
+| `livable_area_sqft` | Living room square feet | 
+| `lot_size_sqft` | Area of the lot in square feet |
+| `year_built` | The Year the principal residence was built |
+| `has_basement` | If the home has a basement |
+| `basement_area_sqft` | The area of the basement |
+| `has_hottub_orspa` | Does the home have a hot tub or spa |
+| `has_pool` | If the home has a pool |
+| `pool_area_sqft` | Area of pool in square feet |
+| `has_patio` | If the home has a patio in yard |
+| `patio_sqft` | Pool without hot tub |
+| `has_shed` | If the home has a storage shed/building in yard |
+| `property_tax` |The total property tax assessed for that assessment year |
+| `taxable_value` | The total tax assessed value of the parcel |
+| `structure_tax` | The assessed value of the built structure on the parcel |
+| `land_tax` |The assessed value of the land area of the parcel |
+
+| Target | Description |
+| :------ | :---------- |
+| `logerror` | The log difference between Zillow's Zestimate and the property sale price |
 
 
 ## Project Organization
