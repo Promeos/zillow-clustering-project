@@ -1,9 +1,11 @@
-# Zillow Clustering Project
+# Reconstruction in Progress
+I need to perform a complete revamp of this repositry: README, notebooks, function files, and summary notebook. I failed to address the __main__ purpose of this project. In its current state you'll have to dig to find insights, which is not user-friendly nor professional. If you are interested in this project please star it and comeback in a few days.
 
-The purpose of this project is to discover the drivers of Zillow's Zestimate logerror of single unit properties sold in May and June of 2017.
+## Zillow Clustering Project
+Using single-unit/single-family residential properties sold in the Southern California area,  predict Zillow's 2017 log error drivers. Use KMeans clustering techniques to uncover drivers of log error.
 
-## Summary
-
+# Summary
+## _Work in progress_
 
 ## Data Dictionary
 | Features | Description |
@@ -37,11 +39,12 @@ The purpose of this project is to discover the drivers of Zillow's Zestimate log
 
 
 ## Project Organization
+### _Work in progress_
 ```
 ├── README.md           <- The top-level README for developers using this project.
 │
 │
-├── mvp.ipynb           <- The main notebook for the project
+├── summary.ipynb           <- The main notebook for the project
 │
 │
 ├── acquire.py          <- The script to download or generate data
@@ -73,6 +76,7 @@ df = pd.read_csv('zillow.csv')
 ```
 
 ## Planning
+### __Work in progress__
 Goals:
 1. The goal of this project is to discover the drivers of Zillow's Zestimate logerror using single unit properties sold in May and June of 2017.
 
@@ -122,8 +126,6 @@ MVP/Final Product:
     - present what is useful
 
 Hypothesis Tests:
-
-
 
 ## Acknowledgements
 - Codeup Data Science Team
