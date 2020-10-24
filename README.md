@@ -45,13 +45,6 @@ Using single-unit/single-family residential properties sold in the Southern Cali
 │
 │
 ├── summary.ipynb           <- The main notebook for the project
-│
-│
-├── acquire.py          <- The script to download or generate data
-│
-├── prepare.py          <- The script for preparing the raw data
-│
-├── model.py            <- The script for preprocessing, modeling, and interpreting
 ```
 
 ## Requirements
