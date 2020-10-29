@@ -44,7 +44,7 @@ Using single-unit/single-family residential properties sold in the Southern Cali
 ├── README.md           <- The top-level README for developers using this project.
 │
 │
-├── summary.ipynb           <- The main notebook for the project
+├── Report.ipynb           <- The main notebook for the project
 ```
 
 ## Requirements
@@ -65,7 +65,7 @@ git clone git@github.com:Promeos/zillow-clustering-project.git
 To open the file in a jupyter notebook use following code:
 ``` python
 import pandas as pd
-df = pd.read_csv('zillow.csv')
+df = pd.read_csv('.data/zillow.csv')
 ```
 
 ## Planning

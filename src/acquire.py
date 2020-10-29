@@ -1,8 +1,9 @@
 import pandas as pd
-import env
 import os
+import env
 
-###################### SQL Connection w/ Credentials ######################
+
+##################### SQL Connection w/ Credentials ######################
 def get_connection(db, user=env.user, host=env.host, password=env.password):
     '''
     Returns a formatted url with login credentials to access a SQL database.
@@ -41,10 +42,10 @@ def get_zillow_data():
     and longitude is not null
     and propertylandusetypeid = 261);'''
     
-    file = 'zillow.csv'
+    file = '../data/zillow.csv'
     
     if os.path.isfile(file):
-        return pd.read_csv('zillow.csv')
+        return pd.read_csv(file)
     else:
         df = pd.read_sql(sql_query, get_connection('zillow'))
         df.to_csv('zillow.csv', index=False)
