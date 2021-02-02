@@ -1,5 +1,5 @@
 # Reconstruction in Progress
-I need to perform a complete revamp of this repositry: README, notebooks, function files, and summary notebook. I failed to address the __main__ purpose of this project. In its current state you'll have to dig to find insights, which is not user-friendly nor professional. If you are interested in this project please star it and comeback in a few days.
+
 
 ## Zillow Clustering Project
 Using single-unit/single-family residential properties sold in the Southern California area,  predict Zillow's 2017 log error drivers. Use KMeans clustering techniques to uncover drivers of log error.
